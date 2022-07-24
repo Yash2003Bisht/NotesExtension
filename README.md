@@ -1,1 +1,2 @@
-#Note Chrome Extension
+# Note Extension
+## Indevelopment
