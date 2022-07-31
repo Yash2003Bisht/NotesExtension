@@ -15,7 +15,7 @@ function renderNotes(){
         noteDetails += `
             <li class="list-group-item">
                 ${notes[i]}
-                <button type="button" class="close" data-dismiss="alert" onclick=deleteNote(${i}) aria-label="Close">
+                <button type="button" class="close" id="note-${i}" data-dismiss="alert") aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button >
             </li>
@@ -24,15 +24,7 @@ function renderNotes(){
 
     }
     notesList.innerHTML = noteDetails;
-}
-
-function deleteNote(noteId){
-    let note = notes[noteId];
-    notes = notes.filter(function(data){
-        return data !== note;
-    })
-    localStorage.clear();
-    renderNotes();
+    deleteNote();
 }
 
 function retrieveFromLocalStorage(){
@@ -43,3 +35,26 @@ function retrieveFromLocalStorage(){
 }
 
 retrieveFromLocalStorage();
+
+// delete single note
+function deleteNote(){
+    for (let i = 0; i < notes.length; i++){
+        let note = document.getElementById(`note-${i}`)
+        note.addEventListener('click', function(){
+            let note = notes[i];
+            notes = notes.filter(function(data){
+                return data !== note;
+            })
+            localStorage.clear();
+            renderNotes();
+        });
+    }
+}
+
+// delete all note
+const deleteAllBtn = document.getElementById('delete-all');
+deleteAllBtn.addEventListener('click', function(){
+    notes = [];
+    localStorage.clear();
+    renderNotes();
+});
